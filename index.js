@@ -12,6 +12,8 @@ server.on('request', function(req, res) {
         return;
     }
 
+    req.url = decodeURIComponent(req.url);
+
     if (req.url.match(/^\/images\//)) {
         var file = fs.readFileSync(req.url.substring(1));
         res.write(file);
@@ -55,11 +57,17 @@ server.on('request', function(req, res) {
     }
 
     var title = directory + ' - ' + (current + 1) + '/' + dirContents.length;
+    previous = current - 1;
+    next = current + 1;
     current = dirContents[current];
+    previous = dirContents[previous] || 'noshow';
+    next = dirContents[next] || 'noshow';
 
     content = content.replace(/{{directory}}/g, directory);
     content = content.replace(/{{current}}/g, current);
     content = content.replace(/{{title}}/g, title);
+    content = content.replace(/{{previous}}/g, previous);
+    content = content.replace(/{{next}}/g, next);
 
     res.setHeader('content-type', 'text/html');
     res.write(content);
