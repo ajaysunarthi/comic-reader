@@ -1,8 +1,15 @@
 var fs = require('fs');
 var http = require('http');
 var server = http.createServer();
+var favicon = fs.readFileSync('favicon.ico');
 
 server.on('request', function(req, res) {
+
+    if (req.url.match(/favicon\.ico$/)) {
+        res.write(favicon);
+        res.end();
+        return;
+    }
 
     if (req.url.match(/^\/images\//)) {
         var file = fs.readFileSync(req.url.substring(1));
@@ -26,6 +33,7 @@ server.on('request', function(req, res) {
         res.end();
         return;
     }
+
 
 });
 
