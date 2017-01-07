@@ -23,6 +23,13 @@
         }
 
     });
+
+    document.getElementById('image-el').addEventListener('click', function() {
+        if ('{{next}}' !== 'noshow') {
+            document.location = "/{{directory}}/{{next}}";
+        }
+    });
+
     </script>
 </body>
 
