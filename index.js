@@ -4,6 +4,13 @@ var server = http.createServer();
 
 server.on('request', function(req, res) {
 
+    if (req.url.match(/^\/images\//)) {
+        var file = fs.readFileSync(req.url.substring(1));
+        res.write(file);
+        res.end();
+        return;
+    }
+
     if (req.url === '/') {
 
         var content = fs.readFileSync('list.html', 'utf8'),
