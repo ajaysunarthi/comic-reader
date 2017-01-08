@@ -1,13 +1,55 @@
 <html>
-<head>
-	<meta charset="UTF-8">
-	
-</head>
-<body>
-	
-	<ul>
-		{{items_list}}
-	</ul>
 
+<head>
+    <meta charset="UTF-8">
+    <STYLE type="text/css">
+    .selected {
+        color: red;
+        border: 1px solid black;
+    }
+    </STYLE>
+</head>
+
+<body>
+    <ul id="UL">
+        {{items_list}}
+    </ul>
+    <script>
+    var current = -1;
+    var li = document.getElementById('UL').getElementsByTagName("li");
+    var max = li.length;
+    // console.log(li[0].firstElementChild.getAttribute('href'));
+    document.addEventListener('keydown', function(e) {
+
+        if (e.keyCode === 40) {
+            current += 1;
+        }
+
+        if (e.keyCode === 38) {
+            current -= 1;
+        }
+
+        if (e.keyCode === 13) {
+            document.location = li[current].firstElementChild.getAttribute('href')
+        }
+
+        if (current < 0) {
+            current = max;
+        }
+        if (current >= max) {
+            current = 0;
+        }
+
+        for (var i = 0; i < max; i++) {
+            if (li[i].classList.contains('selected')) {
+                li[i].className = "";
+            }
+        }
+
+        li[current].classList.add('selected');
+
+    });
+    </script>
 </body>
+
 </html>
